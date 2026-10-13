@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - RN Master Class | DnK Labs</title>
+  <meta name="description" content="Official Privacy Policy for RN Master Class mobile application developed by DnK Labs. Learn how we handle data, camera, photos, and push notifications.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --primary: #00e5ff;
+      --primary-gradient: linear-gradient(135deg, #00e5ff 0%, #007aff 100%);
+      --accent: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --badge-bg: rgba(0, 229, 255, 0.1);
+      --badge-border: rgba(0, 229, 255, 0.3);
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.7;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* Glow Elements */
+    .glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+    }
+    .glow-1 { top: -100px; left: -100px; background: #00e5ff; }
+    .glow-2 { bottom: -100px; right: -100px; background: #007aff; }
+
+    /* Navigation */
+    nav.top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 24px;
+    }
+    .nav-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+    .brand-logo span.gradient-text {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-tag {
+      font-size: 0.72rem;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-left: 20px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: #fff; }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header-section {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
+      color: var(--primary);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .gradient-text {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta-info {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Policy Cards */
+    .policy-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: border-color 0.2s;
+    }
+    .policy-card:hover {
+      border-color: rgba(0, 229, 255, 0.4);
+    }
+    .policy-card h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .policy-card h2 .icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+    .policy-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin: 20px 0 8px;
+    }
+    .policy-card p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      margin-bottom: 14px;
+    }
+    .policy-card ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 12px 0 16px;
+    }
+    .policy-card ul li {
+      position: relative;
+      padding-left: 28px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .policy-card ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+    .policy-card ul.bulleted li::before {
+      content: '•';
+      color: var(--accent);
+      font-size: 1.2rem;
+      left: 6px;
+    }
+
+    /* Highlight Pill Boxes */
+    .pill-box {
+      background: rgba(0, 122, 255, 0.08);
+      border: 1px solid rgba(0, 122, 255, 0.25);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .pill-box strong { color: #60a5fa; }
+
+    /* Action Banner */
+    .action-banner {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(0, 122, 255, 0.1));
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 28px;
+      margin-top: 36px;
+      text-align: center;
+    }
+    .action-banner h3 {
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    .action-banner p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: #1f2937;
+      color: #f1f5f9;
+      border: 1px solid #374151;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="gradient-text">RN Master Class</span>
+        <span class="brand-tag">by DnK Labs</span>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/privacy-policy" class="active">Privacy Policy</a>
+        <a href="/delete-account">Delete Account</a>
+        <a href="mailto:support@rnmasterclass.dev">Support</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="container">
+    <header class="header-section">
+      <div class="badge">
+        <span>🔒</span> Google Play & Developer Compliance
+      </div>
+      <h1>Privacy Policy for <br><span class="gradient-text">RN Master Class</span></h1>
+      <p class="meta-info">
+        <strong>Application:</strong> RN Master Class &nbsp;|&nbsp; 
+        <strong>Developer:</strong> DnK Labs &nbsp;|&nbsp; 
+        <strong>Effective Date:</strong> October 13, 2026
+      </p>
+    </header>
+
+    <!-- 1. Introduction -->
+    <article class="policy-card">
+      <h2><span class="icon-box">📋</span> 1. Overview & Commitment</h2>
+      <p>
+        Welcome to <strong>RN Master Class</strong> ("Application", "App", "we", "us", or "our"), an educational developer learning platform engineered and maintained by <strong>DnK Labs</strong>. We are committed to safeguarding your privacy and ensuring transparency regarding how data is handled.
+      </p>
+      <p>
+        This Privacy Policy describes our practices concerning the collection, usage, storage, and protection of information when you use the RN Master Class mobile application on Android and related web services.
+      </p>
+      <div class="pill-box">
+        <strong>Our Core Privacy Promise:</strong> We do NOT sell, rent, or trade your personal data. All data collected is strictly necessary to power your learning experience, daily streaks, quiz scores, and profile customizations.
+      </div>
+    </article>
+
+    <!-- 2. Data We Collect -->
+    <article class="policy-card">
+      <h2><span class="icon-box">📊</span> 2. Data We Collect</h2>
+      <p>To provide a tailored, interactive educational experience, the Application collects the following information:</p>
+
+      <h3>A. Account Information</h3>
+      <ul>
+        <li><strong>Full Name:</strong> Displayed on your user profile, dashboard greeting, and verifiable completion certificates.</li>
+        <li><strong>Email Address:</strong> Used for account creation, secure authentication, password reset verification codes (OTP), and support inquiries.</li>
+        <li><strong>Password:</strong> Securely stored using industry-standard irreversible bcrypt hashing with salt. We never store or view plain-text passwords.</li>
+        <li><strong>Profile Customization:</strong> Professional title (e.g., "React Native Developer"), avatar theme color, and optional profile photograph.</li>
+      </ul>
+
+      <h3>B. Learning Progress & Analytics</h3>
+      <ul>
+        <li><strong>Completed Components:</strong> Tracking your progress across 47+ hands-on React Native components and lesson modules.</li>
+        <li><strong>Daily Streak:</strong> Tracking consecutive active days to encourage continuous learning momentum.</li>
+        <li><strong>Screen Time Analytics:</strong> Measuring total and daily in-app study time to display your personal productivity graph.</li>
+      </ul>
+
+      <h3>C. Practice Quizzes & Achievements</h3>
+      <ul>
+        <li><strong>Quiz History:</strong> Quiz topic, date taken, correct answers, total questions, and percentage score.</li>
+        <li><strong>Achievement Badges:</strong> Unlocked milestone badges (e.g., "Quiz Starter", "Dedicated Learner", "Perfectionist").</li>
+      </ul>
+    </article>
+
+    <!-- 3. Device Permissions & Sensitive Data -->
+    <article class="policy-card">
+      <h2><span class="icon-box">📱</span> 3. Device Permissions (Camera, Photos & Notifications)</h2>
+      <p>RN Master Class requests explicit device permissions only when required to deliver specific user-initiated features:</p>
+
+      <!-- Camera Permission -->
+      <div class="pill-box" style="border-color: rgba(0, 229, 255, 0.4); background: rgba(0, 229, 255, 0.05);">
+        <h3 style="margin-top: 0; color: #38bdf8;">📷 Camera Permission (android.permission.CAMERA)</h3>
+        <p style="margin-bottom: 8px;">
+          <strong>Why it is needed:</strong> When editing your user profile, you have the option to take a live photo using your device camera to set as your profile avatar.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong>Privacy Guarantee:</strong> Camera access is activated <em>only</em> when you tap "Take Photo" in Edit Profile. The app NEVER accesses your camera in the background, never records video, and never accesses the camera without your explicit direct action.
+        </p>
+      </div>
+
+      <!-- Photos / Storage Permission -->
+      <div class="pill-box" style="border-color: rgba(99, 102, 241, 0.4); background: rgba(99, 102, 241, 0.05);">
+        <h3 style="margin-top: 0; color: #818cf8;">🖼️ Photos & Media Storage (READ_MEDIA_IMAGES / READ_EXTERNAL_STORAGE)</h3>
+        <p style="margin-bottom: 8px;">
+          <strong>Why it is needed:</strong> Used solely when you choose "Choose from Gallery" to pick an existing image file from your device photo library as your user profile picture.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong>Privacy Guarantee:</strong> The Application only reads the specific image you pick through the standard system image picker. It does NOT scan, browse, or read any unrelated photos, documents, or directories on your storage.
+        </p>
+      </div>
+
+      <!-- Push Notifications Permission -->
+      <div class="pill-box" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.05);">
+        <h3 style="margin-top: 0; color: #34d399;">🔔 Push Notifications (POST_NOTIFICATIONS / FCM)</h3>
+        <p style="margin-bottom: 8px;">
+          <strong>Why it is needed:</strong> Used to send daily learning streak reminders, study motivation alerts, and quiz milestone achievements so you never lose your progress streak.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong>User Control:</strong> You can enable or disable push notifications at any time either within the App Settings or via your Android OS App Notification settings.
+        </p>
+      </div>
+    </article>
+
+    <!-- 4. Data Security & Storage -->
+    <article class="policy-card">
+      <h2><span class="icon-box">🛡️</span> 4. Security & Data Retention</h2>
+      <p>We implement enterprise-grade security protocols to protect your personal information:</p>
+      <ul class="bulleted">
+        <li><strong>Encryption in Transit:</strong> All communications between the mobile application and our servers use Transport Layer Security (TLS 1.3 / HTTPS) to prevent eavesdropping.</li>
+        <li><strong>Encrypted Passwords:</strong> Passwords are protected using salted bcrypt hash encryption before persistence.</li>
+        <li><strong>Secure Cloud Infrastructure:</strong> Data is hosted on MongoDB Atlas cloud servers with strict IP whitelisting, automated backups, and encrypted database volumes.</li>
+        <li><strong>Data Retention:</strong> We retain your educational data and profile as long as your account remains active. If you delete your account, your data is erased immediately.</li>
+      </ul>
+    </article>
+
+    <!-- 5. Third-Party Services -->
+    <article class="policy-card">
+      <h2><span class="icon-box">🌐</span> 5. Third-Party Services</h2>
+      <p>The Application integrates with trusted third-party service providers that adhere to rigorous privacy standards:</p>
+      <ul class="bulleted">
+        <li><strong>Google Play Services:</strong> Core Android application runtime and in-app updates.</li>
+        <li><strong>Firebase Cloud Messaging (FCM by Google LLC):</strong> Used solely for delivering push notifications to your device.</li>
+        <li><strong>MongoDB Atlas:</strong> Encrypted cloud database infrastructure.</li>
+      </ul>
+      <p>We do not integrate third-party advertising tracking SDKs or share user learning behaviors with marketing brokers.</p>
+    </article>
+
+    <!-- 6. Account & Data Deletion (Google Play Mandate) -->
+    <article class="policy-card" style="border-color: rgba(239, 68, 68, 0.4);">
+      <h2><span class="icon-box" style="background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3);">🗑️</span> 6. Your Rights: Account & Complete Data Deletion</h2>
+      <p>
+        In accordance with Google Play Developer Policies and global data privacy standards, you have the absolute right to request the deletion of your account and all associated personal data at any time.
+      </p>
+      <p>
+        <strong>When your account is deleted, we permanently remove:</strong>
+      </p>
+      <ul>
+        <li>Your profile name, email, credentials, and avatar preferences.</li>
+        <li>Your entire learning progress across all 47+ components.</li>
+        <li>All quiz attempts, scores, and achievement badge records.</li>
+        <li>Daily streak history and screen time logs.</li>
+        <li>Your device push notification tokens.</li>
+      </ul>
+      <p>
+        <strong>How to delete your account:</strong>
+      </p>
+      <ol style="color: var(--text-muted); margin-left: 20px; margin-bottom: 20px;">
+        <li style="margin-bottom: 8px;"><strong>In the Mobile App:</strong> Open Settings &gt; Tap "Delete Account" &gt; Confirm deletion.</li>
+        <li style="margin-bottom: 8px;"><strong>Online Web Portal:</strong> Visit our dedicated deletion page at <a href="/delete-account" style="color: var(--primary);">rnmasterclass.pages.dev/delete-account</a> and enter your registered email.</li>
+        <li style="margin-bottom: 8px;"><strong>By Email:</strong> Send a request to <a href="mailto:support@rnmasterclass.dev" style="color: var(--primary);">support@rnmasterclass.dev</a> with the subject "Account Deletion Request".</li>
+      </ol>
+
+      <div class="action-banner">
+        <h3>Need to Delete Your RN Master Class Account?</h3>
+        <p>You can execute an instant permanent deletion request right now via our web portal:</p>
+        <div class="btn-group">
+          <a href="/delete-account" class="btn btn-danger">Go to Account Deletion Portal</a>
+          <a href="mailto:support@rnmasterclass.dev?subject=Account%20Deletion%20Request%20-%20RN%20Master%20Class" class="btn btn-secondary">Email Support</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 7. Children's Privacy -->
+    <article class="policy-card">
+      <h2><span class="icon-box">👶</span> 7. Children's Privacy</h2>
+      <p>
+        RN Master Class is designed for software developers, computer science students, and adult learners. We do not knowingly collect personal information from children under the age of 13. If you believe a child has provided us with personal information, please contact us immediately at <a href="mailto:support@rnmasterclass.dev" style="color: var(--primary);">support@rnmasterclass.dev</a>, and we will delete the account promptly.
+      </p>
+    </article>
+
+    <!-- 8. Contact & Organization Information -->
+    <article class="policy-card">
+      <h2><span class="icon-box">📬</span> 8. Developer Contact Information</h2>
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy, our data practices, or your rights, please contact us:</p>
+      <ul>
+        <li><strong>Application Name:</strong> RN Master Class</li>
+        <li><strong>Organization:</strong> DnK Labs</li>
+        <li><strong>Primary Support Inbox:</strong> <a href="mailto:support@rnmasterclass.dev" style="color: var(--primary);">support@rnmasterclass.dev</a></li>
+        <li><strong>Alternative Contact:</strong> <a href="mailto:dnklabs07@gmail.com" style="color: var(--primary);">dnklabs07@gmail.com</a></li>
+        <li><strong>Website:</strong> <a href="https://rnmasterclass.pages.dev" target="_blank" style="color: var(--primary);">https://rnmasterclass.pages.dev</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="padding: 0;">
+      <p>© 2026 <strong>RN Master Class</strong>. Engineered and managed by <strong>DnK Labs</strong>.</p>
+      <p style="margin-top: 8px;">
+        <a href="/">Home</a> &nbsp;|&nbsp;
+        <a href="/privacy-policy">Privacy Policy</a> &nbsp;|&nbsp;
+        <a href="/delete-account">Delete Account</a> &nbsp;|&nbsp;
+        <a href="mailto:support@rnmasterclass.dev">support@rnmasterclass.dev</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

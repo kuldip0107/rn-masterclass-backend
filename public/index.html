@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoDB Atlas Auth & Data Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0b0f19;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+    .badge span {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px #10b981;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 10px 14px;
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      border-color: #10b981;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    button:hover { opacity: 0.9; }
+    button:active { transform: scale(0.98); }
+    .btn-blue {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+    .btn-refresh {
+      background: #374151;
+      width: auto;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+
+    /* Response / Alert Messages */
+    .response-box {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+      line-height: 1.5;
+    }
+    .response-box.show {
+      display: block !important;
+    }
+    .response-success {
+      background: rgba(16, 185, 129, 0.15) !important;
+      border: 1px solid #10b981 !important;
+      color: #a7f3d0 !important;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+    }
+    .response-error {
+      background: rgba(239, 68, 68, 0.15) !important;
+      border: 1px solid #ef4444 !important;
+      color: #fca5a5 !important;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Toast Notification at top right */
+    #toastContainer {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .toast {
+      padding: 14px 20px;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      animation: toastIn 0.35s ease forwards;
+      pointer-events: auto;
+      min-width: 280px;
+      max-width: 380px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .toast-success {
+      background: #065f46;
+      border: 1px solid #10b981;
+    }
+    .toast-error {
+      background: #7f1d1d;
+      border: 1px solid #ef4444;
+    }
+    @keyframes toastIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes toastOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Database Table */
+    .data-card {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .data-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #1f2937;
+    }
+    th {
+      color: #94a3b8;
+      font-weight: 600;
+      background: rgba(31, 41, 55, 0.5);
+    }
+    tr:hover { background: rgba(31, 41, 55, 0.3); }
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
+  <div class="container">
+    <header>
+      <h1>MongoDB Atlas + Node.js Backend</h1>
+      <p>લાઇવ રજીસ્ટ્રેશન, લોગિન API અને MongoDB Atlas ડેટાબેઝ વ્યુઅર</p>
+      <div style="margin-top: 14px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <a href="/privacy-policy" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.3); color: #38bdf8; border-radius: 9999px; text-decoration: none; font-size: 0.85rem; font-weight: 600;">🔒 Privacy Policy</a>
+        <a href="/delete-account" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 9999px; text-decoration: none; font-size: 0.85rem; font-weight: 600;">🗑️ Delete Account</a>
+      </div>
+      <div class="badge" style="margin-top: 14px;">
+        <span></span> MongoDB Atlas Connected (Cluster: kuldip)
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- 1. Register Form -->
+      <div class="card">
+        <h2>📝 Register API (નવો યુઝર બનાવો)</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">
+          આ ફોર્મ સબમિટ કરવાથી ડેટા સીધો તમારા MongoDB Atlas ડેટાબેઝમાં સેવ થશે.
+        </p>
+        <form id="registerForm">
+          <div class="form-group">
+            <label>નામ (Name):</label>
+            <input type="text" id="regName" placeholder="દા.ત. Kuldip Bharda" required>
+          </div>
+          <div class="form-group">
+            <label>ઇમેઇલ (Email):</label>
+            <input type="email" id="regEmail" placeholder="દા.ત. kuldip2@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>પાસવર્ડ (Password):</label>
+            <input type="password" id="regPassword" placeholder="ઓછામાં ઓછા 6 અક્ષર" required minlength="6">
+          </div>
+          <button type="submit" id="regBtn">ડેટાબેઝમાં Register કરો</button>
+        </form>
+        <div id="regResponse" class="response-box"></div>
+      </div>
+
+      <!-- 2. Login Form -->
+      <div class="card">
+        <h2>🔐 Login API (લોગિન ચકાસો)</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 16px;">
+          આ ફોર્મ MongoDB માંથી ઇમેઇલ અને પાસવર્ડ મેચ કરી લોગિન ચકાસશે.
+        </p>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>ઇમેઇલ (Email):</label>
+            <input type="email" id="loginEmail" placeholder="તમારો રજીસ્ટર થયેલો ઇમેઇલ" required>
+          </div>
+          <div class="form-group">
+            <label>પાસવર્ડ (Password):</label>
+            <input type="password" id="loginPassword" placeholder="પાસવર્ડ" required>
+          </div>
+          <button type="submit" id="loginBtn" class="btn-blue">લોગિન કરો</button>
+        </form>
+        <div id="loginResponse" class="response-box"></div>
+      </div>
+    </div>
+
+    <!-- 3. Database Live Records -->
+    <div class="data-card">
+      <div class="data-header">
+        <h2>📊 MongoDB Atlas માં સેવ થયેલો લાઇવ ડેટા</h2>
+        <button class="btn-refresh" onclick="fetchUsers()">🔄 રિફ્રેશ કરો</button>
+      </div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>MongoDB _id</th>
+              <th>નામ (Name)</th>
+              <th>ઇમેઇલ (Email)</th>
+              <th>તારીખ (CreatedAt)</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr>
+              <td colspan="4" class="empty-state">ડેટા લોડ થઈ રહ્યો છે...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toast notification function
+    function showToast(message, isSuccess = true) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${isSuccess ? 'toast-success' : 'toast-error'}`;
+      toast.innerHTML = `<span>${isSuccess ? '✅' : '❌'}</span> <div>${message}</div>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'toastOut 0.35s ease forwards';
+        setTimeout(() => toast.remove(), 350);
+      }, 4000);
+    }
+
+    // Register Form Handler
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const resBox = document.getElementById('regResponse');
+      const btn = document.getElementById('regBtn');
+
+      // Reset box
+      resBox.className = 'response-box';
+      resBox.style.display = 'none';
+      btn.innerText = 'પ્રોસેસિંગ...';
+      btn.disabled = true;
+
+      const payload = {
+        name: document.getElementById('regName').value.trim(),
+        email: document.getElementById('regEmail').value.trim(),
+        password: document.getElementById('regPassword').value,
+      };
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          resBox.className = 'response-box response-success show';
+          resBox.style.display = 'block';
+          resBox.innerHTML = `
+            <strong>🎉 ${data.message}</strong><br>
+            <span style="font-size: 0.8rem; color: #6ee7b7;">User ID: ${data.user.id}</span>
+          `;
+          showToast(`સફળ! "${data.user.name}" MongoDB માં સેવ થઈ ગયા!`, true);
+          document.getElementById('registerForm').reset();
+          fetchUsers(); // Refresh live table
+        } else {
+          resBox.className = 'response-box response-error show';
+          resBox.style.display = 'block';
+          resBox.innerHTML = `<strong>❌ ${data.message || 'રજીસ્ટ્રેશન નિષ્ફળ થયું.'}</strong>`;
+          showToast(data.message || 'ભૂલ આવી!', false);
+        }
+      } catch (err) {
+        resBox.className = 'response-box response-error show';
+        resBox.style.display = 'block';
+        resBox.innerHTML = `<strong>❌ નેટવર્ક ભૂલ: ${err.message}</strong>`;
+        showToast('સર્વર સાથે કનેક્ટ ન થઈ શક્યું', false);
+      } finally {
+        btn.innerText = 'ડેટાબેઝમાં Register કરો';
+        btn.disabled = false;
+      }
+    });
+
+    // Login Form Handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const resBox = document.getElementById('loginResponse');
+      const btn = document.getElementById('loginBtn');
+
+      // Reset box
+      resBox.className = 'response-box';
+      resBox.style.display = 'none';
+      btn.innerText = 'ચકાસી રહ્યા છીએ...';
+      btn.disabled = true;
+
+      const payload = {
+        email: document.getElementById('loginEmail').value.trim(),
+        password: document.getElementById('loginPassword').value,
+      };
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          resBox.className = 'response-box response-success show';
+          resBox.style.display = 'block';
+          resBox.innerHTML = `
+            <strong>✅ ${data.message}</strong><br>
+            <span style="font-size: 0.8rem; color: #93c5fd;">સ્વાગત છે, ${data.user.name}!</span>
+          `;
+          showToast(`સ્વાગત છે, ${data.user.name}! લોગિન સફળ થયું.`, true);
+        } else {
+          resBox.className = 'response-box response-error show';
+          resBox.style.display = 'block';
+          resBox.innerHTML = `<strong>❌ ${data.message || 'લોગિન નિષ્ફળ ગયું.'}</strong>`;
+          showToast(data.message || 'ખોટી માહિતી!', false);
+        }
+      } catch (err) {
+        resBox.className = 'response-box response-error show';
+        resBox.style.display = 'block';
+        resBox.innerHTML = `<strong>❌ નેટવર્ક ભૂલ: ${err.message}</strong>`;
+        showToast('સર્વર સાથે કનેક્ટ ન થઈ શક્યું', false);
+      } finally {
+        btn.innerText = 'લોગિન કરો';
+        btn.disabled = false;
+      }
+    });
+
+    // Fetch All Users from MongoDB
+    async function fetchUsers() {
+      const tbody = document.getElementById('userTableBody');
+      try {
+        const res = await fetch('/api/auth/users');
+        const data = await res.json();
+
+        if (data.users && data.users.length > 0) {
+          tbody.innerHTML = data.users.map(u => `
+            <tr>
+              <td style="font-family: monospace; color: #10b981; font-size: 0.85rem;">${u._id}</td>
+              <td><strong>${u.name}</strong></td>
+              <td>${u.email}</td>
+              <td style="color: #94a3b8; font-size: 0.85rem;">${new Date(u.createdAt).toLocaleString()}</td>
+            </tr>
+          `).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="4" class="empty-state">હજુ સુધી કોઈ યુઝર રજીસ્ટર નથી થયો. ઉપરના ફોર્મથી નવો યુઝર ઉમેરો!</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4" class="empty-state" style="color: #ef4444;">ડેટા લાવવામાં ભૂલ: ${err.message}</td></tr>`;
+      }
+    }
+
+    // Initial load of users on page load
+    fetchUsers();
+  </script>
+</body>
+</html>
