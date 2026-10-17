@@ -16,6 +16,7 @@ app.use('/api/user', require('./routes/user'));
 app.use('/api/quiz', require('./routes/quiz'));
 app.use('/api/support', require('./routes/support'));
 app.use('/api/notifications', require('./routes/notification'));
+app.use('/api/components', require('./routes/components'));
 
 const path = require('path');
 
